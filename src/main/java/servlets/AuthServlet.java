@@ -29,7 +29,7 @@ public class AuthServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         if(AuthService.isSigned(req)){
-            getServletContext().getRequestDispatcher("/profile").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/profile");
         } else {
             getServletContext().setAttribute("title", "Авторизация");
             getServletContext().getRequestDispatcher("/WEB-INF/jsp/auth.jsp").forward(req, resp);
@@ -53,10 +53,10 @@ public class AuthServlet extends HttpServlet {
         }
         if (content.toString().equals("")){
             AuthService.signIn(req, user);
-            getServletContext().getRequestDispatcher("/profile").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/profile");
         } else {
             getServletContext().setAttribute("text", content.toString());
-            getServletContext().getRequestDispatcher("/fail").forward(req, resp);
+            resp.sendRedirect(req.getContextPath() + "/fail");
         }
     }
 
